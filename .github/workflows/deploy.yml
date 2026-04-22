@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
@@ -16,15 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          # Uses the latest stable Node for 2026
           node-version: 24
-          # This bypasses the version conflict between Astro 6 and Tailwind
-          package-manager: npm install --legacy-peer-deps
+          # We manually manage the cache to avoid the error you saw
+          cache: 'npm'
+
+      - name: Install dependencies
+        # This handles the Astro 6 vs Tailwind conflict locally on the runner
+        run: npm install --legacy-peer-deps
+
+      - name: Build Astro
+        # We run the build command directly to ensure total control
+        run: npm run build
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Astro outputs the finished site to the 'dist' folder by default
+          path: ./dist
 
   deploy:
     needs: build
