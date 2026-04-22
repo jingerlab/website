@@ -9,28 +9,28 @@
   /* --- SERIF: Alegreya --- */
   @font-face {
     font-family: 'Alegreya';
-    src: url('../../fonts/serif/Alegreya-Regular.ttf') format('truetype');
+    src: url('/website/fonts/serif/Alegreya-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'Alegreya';
-    src: url('../../fonts/serif/Alegreya-Italic.ttf') format('truetype');
+    src: url('/website/fonts/serif/Alegreya-Italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: 'Alegreya';
-    src: url('../../fonts/serif/Alegreya-Bold.ttf') format('truetype');
+    src: url('/website/fonts/serif/Alegreya-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'Alegreya';
-    src: url('../../fonts/serif/Alegreya-BoldItalic.ttf') format('truetype');
+    src: url('/website/fonts/serif/Alegreya-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -39,28 +39,28 @@
   /* --- SANS: Century Gothic --- */
   @font-face {
     font-family: 'CenturyGothic';
-    src: url('../../fonts/sans/CenturyGothic-Regular.ttf') format('truetype');
+    src: url('/website/fonts/sans/CenturyGothic-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'CenturyGothic';
-    src: url('../../fonts/sans/CenturyGothic-Italic.ttf') format('truetype');
+    src: url('/website/fonts/sans/CenturyGothic-Italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: 'CenturyGothic';
-    src: url('../../fonts/sans/CenturyGothic-Bold.ttf') format('truetype');
+    src: url('/website/fonts/sans/CenturyGothic-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'CenturyGothic';
-    src: url('../../fonts/sans/CenturyGothic-BoldItalic.ttf') format('truetype');
+    src: url('/website/fonts/sans/CenturyGothic-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -69,7 +69,7 @@
   /* --- DISPLAY: Catchy Mager --- */
   @font-face {
     font-family: 'CatchyMager';
-    src: url('../../fonts/display/catchy-mager.regular.ttf') format('truetype');
+    src: url('/website/fonts/display/catchy-mager.regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
