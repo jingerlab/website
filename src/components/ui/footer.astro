@@ -1,0 +1,45 @@
+---
+// src/components/Footer.astro
+const currentYear = 2026;
+---
+
+<footer class="relative w-full mt-20 border-t border-border/40 
+               bg-black text-white 
+               dark:bg-zinc-950 dark:text-zinc-400
+               transition-colors duration-300">
+  
+  <div class="container mx-auto px-6 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      
+      <div class="flex flex-col items-center md:items-start gap-3">
+        <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-bold">Connect</span>
+        <div class="flex gap-5 text-xs">
+          {['LinkedIn', 'Scholar', 'ResearchGate'].map((link) => (
+            <a href="#" class="relative group py-1 text-zinc-300 hover:text-white transition-colors">
+              {link}
+              {/* The Underline - Force white color for visibility on black bg */}
+              <span class="absolute bottom-0 left-0 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <a 
+          href="/Harsh_Jinger_CV.pdf" 
+          download
+          class="inline-flex items-center justify-center gap-2 rounded-md text-xs font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4 py-2"
+        >
+          <span>Download CV</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 group-hover:translate-y-0.5 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="flex flex-col items-center md:items-end gap-1 font-mono text-[10px] tracking-tight">
+        <p class="text-zinc-400 uppercase">Designed by Harsh Jinger</p>
+        <p class="text-zinc-600 italic">© {currentYear} Jingerlab — Built with Native Joy</p>
+      </div>
+
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,184 @@
+---
+// src/components/SurgicalArchive.astro
+---
+
+<section class="py-32 bg-white dark:bg-[#09090b] border-b border-zinc-100 dark:border-zinc-900 overflow-hidden relative min-h-[700px] flex items-center justify-center">
+  <div class="container mx-auto px-6 flex flex-col items-center justify-center">
+    
+    <div class="perspective-container w-full flex justify-center items-center h-[450px]">
+      <div id="dice-container" class="relative z-50 w-[200px] h-[200px] preserve-3d transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) cursor-pointer border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl">
+        
+        <div class="cube-face front absolute inset-0 flex items-center justify-center backface-hidden rounded-[2.5rem]">
+          
+          <div id="dice-number" class="text-8xl font-black font-mono text-primary transition-all duration-300 pointer-events-none" style="transform: translateZ(20px);">1</div>
+          
+          <div id="dice-content" class="opacity-0 scale-95 absolute inset-0 px-12 text-center flex flex-col items-center justify-center pointer-events-none transition-all duration-500" style="transform: translateZ(30px);">
+            <p class="text-xl md:text-2xl font-medium italic text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight line-clamp-3">
+               </p>
+            <div class="mt-8 flex items-center gap-4 w-full justify-center">
+               <div class="h-[1px] w-8 bg-zinc-200 dark:bg-zinc-800"></div>
+               <span class="text-[9px] font-mono text-primary font-bold uppercase tracking-[0.4em]">Archive_Entry</span>
+               <div class="h-[1px] w-8 bg-zinc-200 dark:bg-zinc-800"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cube-face right absolute inset-0 bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-[2.5rem] opacity-20"></div>
+        <div class="cube-face left absolute inset-0 bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-[2.5rem] opacity-20"></div>
+        <div class="cube-face top absolute inset-0 bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-[2.5rem] opacity-20"></div>
+        <div class="cube-face bottom absolute inset-0 bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-[2.5rem] opacity-20"></div>
+      </div>
+    </div>
+
+    <div class="mt-12 flex items-center gap-3">
+      <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+      <div id="dice-status" class="font-mono text-[10px] text-primary font-bold uppercase tracking-[0.8em] italic">
+        [ SYSTEM_IDLE ]
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .perspective-container { perspective: 1200px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .backface-hidden { backface-visibility: hidden; }
+
+  /* Geometry */
+  .front  { transform: rotateY(0deg) translateZ(100px); }
+  .right  { transform: rotateY(90deg) translateZ(100px); }
+  .left   { transform: rotateY(-90deg) translateZ(100px); }
+  .top    { transform: rotateX(90deg) translateZ(100px); }
+  .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+  .is-rolling { animation: kinetic-tumble 0.6s linear infinite; }
+  @keyframes kinetic-tumble {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(720deg); }
+  }
+
+  .is-expanded {
+    width: 750px !important;
+    height: 320px !important;
+    transform: none !important;
+  }
+
+  .is-expanded .cube-face:not(.front) { opacity: 0; }
+  .is-expanded .front { 
+    transform: none !important; 
+    width: 100%; height: 100%; 
+    background: white !important;
+  }
+  :global(.dark) .is-expanded .front { background: #09090b !important; }
+
+  @media (max-width: 768px) {
+    .is-expanded { width: 95% !important; height: 380px !important; }
+  }
+</style>
+
+<script is:inline>
+  function initSurgicalArchive() {
+    const container = document.getElementById('dice-container');
+    const numDisplay = document.getElementById('dice-number');
+    const contentWrap = document.getElementById('dice-content');
+    const textTarget = contentWrap?.querySelector('p');
+    const status = document.getElementById('dice-status');
+
+    if (!container || !numDisplay || !contentWrap) return;
+
+    const library = [
+      "Is documentation a bridge to the public, or a mirror for the self?",
+      "Most 'complex' problems are just three simple problems wearing a trench coat.",
+      "Life Path 1: Leadership is not the title, but the first line of code written.",
+      "A messy desk is a sign of a focused mind. A clean desk is a sign of a finished project.",
+      "Mathematics is the only language where the poetry is provably true.",
+      "We build digital libraries but rarely spend time in the digital stacks.",
+      "Adjunct life is the art of teaching the future while living in the draft.",
+      "The best questions are the ones that survive the first three answers.",
+      "Observation doesn't just change the result; it justifies the experiment."
+    ];
+
+    let currentIndex = 0;
+    let isBusy = false;
+    let mainTicker;
+
+    const open = (index) => {
+      isBusy = true;
+      const n = index + 1;
+      textTarget.textContent = `"${library[index]}"`;
+      numDisplay.textContent = n;
+      
+      // Step 1: Expand
+      container.classList.add('is-expanded');
+      numDisplay.style.opacity = '0';
+      
+      // Step 2: Show Content
+      setTimeout(() => {
+        contentWrap.classList.remove('opacity-0', 'scale-95');
+        contentWrap.classList.add('opacity-100', 'scale-100');
+        status.textContent = `[ ENTRY_DECRYPTED: ${n} ]`;
+        
+        // Auto-close timer
+        setTimeout(close, 8000);
+      }, 600);
+    };
+
+    const close = () => {
+      // Step 1: Hide content immediately
+      contentWrap.classList.add('opacity-0', 'scale-95');
+      contentWrap.classList.remove('opacity-100', 'scale-100');
+      
+      // Step 2: Collapse container after fade
+      setTimeout(() => {
+        container.classList.remove('is-expanded');
+        
+        setTimeout(() => {
+          numDisplay.style.opacity = '1';
+          currentIndex = (currentIndex + 1) % library.length;
+          numDisplay.textContent = currentIndex + 1;
+          status.textContent = "[ SYSTEM_IDLE ]";
+          isBusy = false;
+        }, 700);
+      }, 300);
+    };
+
+    const roll = () => {
+      if (isBusy) return;
+      isBusy = true;
+      clearInterval(mainTicker);
+      container.classList.add('is-rolling');
+      status.textContent = "[ MANUAL_OVERRIDE_ACTIVE ]";
+
+      setTimeout(() => {
+        container.classList.remove('is-rolling');
+        const rand = Math.floor(Math.random() * library.length);
+        currentIndex = rand;
+        open(rand);
+        startLoop(); // Restart loop after manual intervention
+      }, 1200);
+    };
+
+    const startLoop = () => {
+      if (mainTicker) clearInterval(mainTicker);
+      mainTicker = setInterval(() => {
+        if (!isBusy) open(currentIndex);
+      }, 12000);
+    };
+
+    container.addEventListener('click', () => {
+      if (container.classList.contains('is-expanded')) {
+        close();
+      } else {
+        roll();
+      }
+    });
+
+    // Start first cycle after a short initial delay instead of a full interval
+    setTimeout(() => open(0), 1500);
+    startLoop();
+  }
+
+  // Ensure it runs on all Astro navigation events
+  document.addEventListener('DOMContentLoaded', initSurgicalArchive);
+  document.addEventListener('astro:page-load', initSurgicalArchive);
+</script>
