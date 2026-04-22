@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import pagefind from "astro-pagefind";
 
 export default defineConfig({
-  site: 'https://jingerlab.github.io',
-  base: '/website',
+  site: 'https://jingerlab.in',
+  base: '/',
   // The order matters: Tailwind should usually come before React
   integrations: [react(), pagefind()],
 
