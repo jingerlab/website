@@ -106,9 +106,12 @@ export function LabWorkspace() {
 	const isLockedView = activeCategory === 'library' && !isLibraryUnlocked;
 
 	const resolvedAppUrl = activeItem?.appUrl
-		? activeItem.appUrl.endsWith('/')
-			? activeItem.appUrl
-			: `${activeItem.appUrl}/`
+		? (() => {
+			const base = activeItem.appUrl.endsWith('/')
+				? activeItem.appUrl
+				: `${activeItem.appUrl}/`;
+			return reloadKey > 0 ? `${base}?_t=${Date.now()}` : base;
+		})()
 		: undefined;
 
 	return (
@@ -277,7 +280,7 @@ export function LabWorkspace() {
 											variant="ghost"
 											size="icon"
 											onClick={handleReloadFrame}
-											title="Reload app"
+											title="Hard reload app"
 											className="h-7 w-7 text-muted-foreground hover:text-foreground transition-transform active:scale-90"
 										>
 											<RotateCw
