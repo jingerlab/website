@@ -48,6 +48,17 @@ export const LAB_ITEMS: LabItem[] = [
 		status: 'LIVE',
 	},
 	{
+		id: 'auditor',
+		title: 'Auditor',
+		category: 'workbench',
+		subtitle:
+			'Browser-based inspection and verification utility for auditing structured records, submissions, and outputs.',
+		appUrl: 'https://jingerlab.github.io/auditor',
+		tags: ['Audit', 'Verification', 'Client-Side'],
+		year: '2026',
+		status: 'LIVE',
+	},
+	{
 		id: 'jingerslides',
 		title: 'JingerSlides 3D Studio',
 		category: 'workbench',
